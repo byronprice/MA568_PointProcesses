@@ -244,11 +244,13 @@ ProcessHistory = cell(30,1);
 for ii=1:30
     ProcessHistory{ii} = zeros(totalTime,30);
     for jj=1:30
-        tempProcess = Process{ii}';
-        zeroVec = zeros(jj,1);
-        tempProcess = [zeroVec;tempProcess];
-        tempProcess = tempProcess(1:end-jj);
-        ProcessHistory{ii}(:,jj) = tempProcess;
+        for kk=1:numGames
+            tempProcess = Process{ii}(1+(kk-1)*gameTime:gameTime*kk)';
+            zeroVec = zeros(jj,1);
+            tempProcess = [zeroVec;tempProcess];
+            tempProcess = tempProcess(1:end-jj);
+            ProcessHistory{ii}(1+(kk-1)*gameTime:gameTime*kk,jj) = tempProcess;
+        end
     end
 end
 
@@ -338,7 +340,7 @@ ks2stat
 
 % time-rescaling theorem for goodness of fit
 %[b,dev,stats] = glmfit([],focusProcess,'poisson');
-errors = stats.se.*(exp(b).^2);
+errors = stats.se.*exp(b);
 figure();hold on;
 e = errorbar(0,exp(b(1)),2*errors(1),'*b','LineWidth',2);hold on;
 e.LineStyle = 'none';
