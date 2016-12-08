@@ -12,7 +12,7 @@ numCoeffs = size(X{1},2)+1;
 numProcesses = length(testInds);
 Results = zeros(numProcesses,numCoeffs,4);
 for ii=1:numProcesses
-    [b,dev,stats] = glmfit(X{testInds(8)},Process{testInds(ii)}','poisson');
+    [b,dev,stats] = glmfit(X{testInds(ii)},Process{testInds(ii)}','poisson');
     for jj=1:numCoeffs
         Results(ii,jj,:) = [b(jj),stats.se(jj),stats.p(jj),dev];
     end
