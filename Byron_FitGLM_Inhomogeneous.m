@@ -20,7 +20,7 @@ end
 
 minB = min(min(exp(Results(testInds,:,1))));
 maxB = max(max(exp(Results(testInds,:,1))));
-expError = Results(:,:,2).*(exp(Results(:,:,1)).^2);
+expError = Results(:,:,2).*exp(Results(:,:,1));
 
 signifResults = double(Results(:,:,3)<0.05);
 signifResults(signifResults>0) = -0.5;
